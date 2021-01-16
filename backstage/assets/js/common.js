@@ -35,9 +35,9 @@ $.ajaxPrefilter(function (option) {
         // 处理失败的情况
         if (res.responseJSON && res.responseJSON.status === 401 && res.responseJSON.message === '身份认证失败！') {
             // 把无效的token清除
-            // localStorage.removeItem('mytoken')
+            localStorage.removeItem('mytoken')
             // // 如果身份验证失败了，就跳转到登录页面
-            // parent.window.location.href = '../login.html'
+            parent.window.location.href = '../login.html'
         }
     }
 })
