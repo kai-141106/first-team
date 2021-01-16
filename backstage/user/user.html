@@ -1,11 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>用户列表</title>
+    <meta charset="UTF-8">
+    <title>用户列表</title>
+    <link rel="stylesheet" type="text/css" href="../assets/lib/layui/css/layui.css">
 </head>
+
 <body>
-  
+    <div class="layui-card">
+        <div class="layui-card-header">用户列表</div>
+        <div class="layui-card-body">
+            <!-- 文章列表的表格 -->
+            <table class="layui-table">
+                <colgroup>
+                    <col width="5%">
+                    <col width="20%">
+                    <col width="15%">
+                    <col width="15%">
+                    <col width="20%">
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>账号名称</th>
+                        <th>昵称</th>
+                        <th>邮箱</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 这里放数据 -->
+                </tbody>
+            </table>
+            <!-- 分页效果填充位置 -->
+            <div id="articlePage"></div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="../assets/lib/jquery.js"></script>
+    <script type="text/javascript" src="../assets/js/common.js"></script>
+    <script type="text/javascript" src="../assets/lib/layui/layui.all.js"></script>
+    <script type="text/javascript" src="../assets/lib/template-web.js"></script>
+    <script type="text/javascript" src="../assets/js/user/user.js"></script>
 </body>
+
 </html>
