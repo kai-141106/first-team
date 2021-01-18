@@ -1,43 +1,47 @@
-$(function () {
-    // 评论功能
-    template.defaults.imports.formatDate = function (date) {
-        // 可以对原始的日期对象进行处理
-        date = new Date(date)
-        var year = date.getFullYear()
-        var month = date.getMonth() + 1
-        var day = date.getDate()
-        return year + '-' + month + '-' + day
-    }
-
-    function loadCommmentList() {
-        $.ajax({
-            type: 'get',
-            url: 'admin/comments',
-            success: function (res) {
-                var tags = template('table-tpl', res)
-                $('.layui-table tbody').html(tags)
+//加载评论列表
+function loadComments() {
+    $.ajax({
+        url: `admin/comments`,
+        type: `GET`,
+        success: (res) => {
+            if (res.status == 0) {
+                let str = '';
+                $.each(res.data, (index, item) => {
+                    str += `<tr>
+                    <td>${item.id}</td>
+                    <td>${item.uname}</td>
+                    <td>${item.content}</td>
+                    <td>${item.cdate.slice(0, 10)}</td>
+                    <td>
+                      <button data-id="${item.id}" type="button" class="layui-btn layui-btn-xs layui-btn-danger delete">删除</button>
+                    </td>
+                  </tr>`
+                })
+                $('tbody').html(str);
+            } else {
+                layer.msg(res.message);
             }
-        })
-    }
+        }
+    })
+}
+loadComments();
 
-    loadCommmentList()
-
-    // 删除评论
-    $('.layui-table tbody').on('click', '.delete', function (e) {
-        var id = $(e.target).data('id')
-        layer.confirm('确认要删除吗？', function (index) {
-            $.ajax({
-                type: 'delete',
-                url: 'admin/comments/' + id,
-                success: function (res) {
-                    if (res.status === 0) {
-                        // 关闭窗口
-                        layer.close(index)
-                        // 刷新类别
-                        loadCommmentList()
-                    }
+//删除评论
+$("tbody").on('click', '.delete', (e) => {
+    let id = e.target.dataset.id;
+    layer.confirm('您确定要删除吗？', {
+        icon: 3,
+        title: '删除评论'
+    }, function() {
+        $.ajax({
+            url: `admin/comments/` + id,
+            type: `DELETE`,
+            success: (res) => {
+                layer.msg(res.message);
+                if (res.status == 0) {
+                    loadComments();
                 }
-            })
+            }
         })
     })
 })
