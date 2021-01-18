@@ -10,7 +10,7 @@
     //新建不可重复规则
     form.verify({
         same: function (value, item) {
-            var pwdOne = $('.pwdOne').val();
+            var pwdOne = $('.newPaw').val();
             if (value !== pwdOne) {
                 return '两次输入的密码不一致';
             }
@@ -19,6 +19,7 @@
 
     var pagenum = 1;
     var pagesize = 3;
+    let total;
     //********************************************************************* */ 获取用户列表
     function getUserList() {
         $.ajax({
@@ -33,6 +34,7 @@
             },
             success: function (res) {
                 if (res.status == 0) {
+                    total = res.total;
                     var str = '';
                     $.each(res.data, function (index, item) {
 
@@ -87,8 +89,12 @@
                 url: 'admin/users/' + id,
                 type: 'delete',
                 success: function (res) {
-                    // console.log(res);
+                    console.log(res);
                     layer.msg(res.message);
+                    var nowPage = (pagenum - 1) * pagesize;
+                    if (total - 1 == nowPage) {
+                        pagenum = 1;
+                    }
                     getUserList();
                 }
             });
